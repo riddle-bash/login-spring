@@ -40,4 +40,8 @@ public class UserController {
 		return "register_form";
 	}
 
+	@GetMapping("/login")
+	public String login(Model model) {
+		return "login_form";
+	}
 }
