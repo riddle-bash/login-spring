@@ -97,12 +97,13 @@ body {
     font-size: 16px;
     color: #333;
     font-weight: 600;
+    margin: 0px 0 15px;
  }
 
  .wrapper .register-link {
     font-size: 14.5px;
     text-align: center;
-    margin: 20px 0 15px;
+    margin: 5px 0 15px;
  }
  
  .register-link p a {
@@ -113,4 +114,12 @@ body {
 
  .register-link p a:hover {
     text-decoration: underline;
+ }
+
+ .wrapper .message {
+   font-size: 16px;
+   font-weight: 600;
+   text-align: center;
+   padding: 10px;
+   border-radius: 30px;
  }
