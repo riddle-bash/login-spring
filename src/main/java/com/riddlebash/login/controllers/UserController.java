@@ -36,7 +36,7 @@ public class UserController {
 			Model model) {
 		UserEntity userEntity = userMapper.mapFrom(userDto);
 		UserEntity savedUser = userService.createUser(userEntity);
-		model.addAttribute("message", "Registered Successfully");
+		model.addAttribute("message", "Registered Successfully!");
 		return "register_form";
 	}
 
