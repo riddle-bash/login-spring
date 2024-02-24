@@ -1,0 +1,13 @@
+* {
+    background: #333;
+}
+
+select {
+    border-radius: 20px;
+    background: #fff;
+}
+
+select option {
+    border-radius: 20px;
+    background: #fff;
+}

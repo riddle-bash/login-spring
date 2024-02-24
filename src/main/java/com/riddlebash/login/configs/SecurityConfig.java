@@ -11,11 +11,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.riddlebash.login.handler.SuccessHandlerImpl;
 import com.riddlebash.login.services.userdetails.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	@Autowired
+	private SuccessHandlerImpl successHandlerImpl;
 	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
@@ -31,11 +35,11 @@ public class SecurityConfig {
 		httpSecurity.csrf(c -> c.disable())
 		
 		.authorizeHttpRequests(request -> request.requestMatchers("/admin-page")
-				.permitAll().requestMatchers("/user-page").permitAll()
+				.hasAuthority("ADMIN").requestMatchers("/user-page").hasAuthority("USER")
 				.requestMatchers("/registration", "/styles/**").permitAll()
 				.anyRequest().authenticated())
 		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
-				.defaultSuccessUrl("/").permitAll())
+				.successHandler(successHandlerImpl).permitAll())
 		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/login?logout").permitAll());
