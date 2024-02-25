@@ -52,8 +52,19 @@ public class LoginController {
 			Model model) {
 		
 		userDto.setRole("USER");
+		
+		if (userDto.getUsername().equals("admin")) {
+			userDto.setRole("ADMIN");
+		}
+		
 		UserEntity userEntity = userMapper.mapFrom(userDto);
-		UserEntity savedUser = userService.saveUser(userEntity);
+		
+		try {
+			UserEntity savedUser = userService.saveUser(userEntity);
+		} catch (Exception e) {
+			model.addAttribute("messagefail", "Email or username has already existed!");
+			return "register_form";
+		}
 		
 		model.addAttribute("message", "Registered Successfully!");
 		return "register_form";

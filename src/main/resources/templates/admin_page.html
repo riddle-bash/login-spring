@@ -37,10 +37,12 @@
         			<td th:text="${userCell.role}"></td>
         			<td style="white-space: nowrap">
   						<a class="btn btn-primary btn-sm fs-6"
-  							th:href="@{/users/edit(id=${userCell.id})}">Edit</a>
+  							th:href="@{/users/edit(id=${userCell.id})}"
+  							 th:if="${userCell.role} != 'ADMIN'">Edit</a>
   						<a class="btn btn-primary btn-sm fs-6"
   							th:href="@{/users/delete(id=${userCell.id})}"
-  							onclick="return confirm('Are you sure?')">Delete</a>
+  							onclick="return confirm('Are you sure?')"
+  							 th:if="${userCell.role} != 'ADMIN'">Delete</a>
   					</td>
         		</tr>
         	</tbody>

@@ -46,7 +46,8 @@ public class UserController {
 	public String postEditUser(
 			@RequestParam Long id,
 			@ModelAttribute UserDto userDto, 
-			BindingResult result) {
+			BindingResult result,
+			Model model) {
 		
 		if (!userService.existById(id) || result.hasErrors()) {
 			return "redirect:/admin-page";
