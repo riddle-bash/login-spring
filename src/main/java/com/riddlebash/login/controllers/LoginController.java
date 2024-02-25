@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import com.riddlebash.login.domains.dtos.UserDto;
 import com.riddlebash.login.domains.entities.UserEntity;
@@ -80,14 +83,17 @@ public class LoginController {
 	}
 	
 	@GetMapping("/admin-page")
-	public String getAdminPage(Model model, Principal principal) {
+	public String getAdminPage(Model model, Principal principal, 
+			@PageableDefault(sort = {"role", "id"}, size = 8) Pageable pageable) {
 		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 	
-		List<UserEntity> users = userService.findAll();
+		Page<UserEntity> pageUsers = userService.findAll(pageable);
+		List<UserDto> users = pageUsers.map(userMapper::mapTo).toList();
 		model.addAttribute("users", users);
 		
 		return "admin_page";
+		
 	}
 }
